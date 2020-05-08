@@ -43,3 +43,23 @@ macro_rules! testing_env {
 }
 
 pub use environment::blockchain_interface::BlockchainInterface;
+
+// Exporting common classes
+
+#[doc(hidden)]
+pub use borsh;
+
+#[doc(hidden)]
+pub use base64;
+
+#[doc(hidden)]
+pub use bs58;
+
+#[doc(hidden)]
+pub use serde;
+
+#[doc(hidden)]
+pub use crate::serde::*;
+
+#[doc(hidden)]
+pub use serde_json;

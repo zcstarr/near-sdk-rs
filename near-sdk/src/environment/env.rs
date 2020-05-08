@@ -720,12 +720,12 @@ pub fn created_receipts() -> Vec<Receipt> {
 // # Saving and loading of the contract state #
 // ############################################
 /// Load the state of the given object.
-pub fn state_read<T: borsh::BorshDeserialize>() -> Option<T> {
+pub fn state_read<T: crate::borsh::BorshDeserialize>() -> Option<T> {
     storage_read(STATE_KEY)
         .map(|data| T::try_from_slice(&data).expect("Cannot deserialize the contract state."))
 }
 
-pub fn state_write<T: borsh::BorshSerialize>(state: &T) {
+pub fn state_write<T: crate::borsh::BorshSerialize>(state: &T) {
     let data = state.try_to_vec().expect("Cannot serialize the contract state.");
     storage_write(STATE_KEY, &data);
 }

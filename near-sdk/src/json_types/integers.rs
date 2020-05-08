@@ -3,8 +3,8 @@
 //! NOTE: JSON standard can only work with integer up to 53 bits. So we need helper classes for
 //! 64-bit and 128-bit integers.
 
-use borsh::{BorshDeserialize, BorshSerialize};
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use crate::borsh::{BorshDeserialize, BorshSerialize};
+use crate::serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 macro_rules! impl_str_type {
     ($iden: ident, $ty: tt) => {
@@ -43,7 +43,7 @@ macro_rules! impl_str_type {
                 let s: String = Deserialize::deserialize(deserializer)?;
                 Ok(Self(
                     $ty::from_str_radix(&s, 10)
-                        .map_err(|err| serde::de::Error::custom(err.to_string()))?,
+                        .map_err(|err| crate::serde::de::Error::custom(err.to_string()))?,
                 ))
             }
         }
@@ -66,8 +66,8 @@ mod tests {
             let b: $int_type = str_a.into();
             assert_eq!(a, b);
 
-            let str: String = serde_json::to_string(&str_a).unwrap();
-            let deser_a: $str_type = serde_json::from_str(&str).unwrap();
+            let str: String = crate::serde_json::to_string(&str_a).unwrap();
+            let deser_a: $str_type = crate::serde_json::from_str(&str).unwrap();
             assert_eq!(a, deser_a.0);
         };
     }

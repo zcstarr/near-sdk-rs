@@ -1,5 +1,5 @@
-use near_sdk::{near_bindgen, metadata};
-use borsh::{BorshDeserialize, BorshSerialize};
+use near_sdk::borsh::{BorshDeserialize, BorshSerialize};
+use near_sdk::{metadata, near_bindgen};
 metadata! {
 #[near_bindgen]
 #[derive(Default, BorshDeserialize, BorshSerialize)]

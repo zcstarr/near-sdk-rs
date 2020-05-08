@@ -1,5 +1,5 @@
-use borsh::{BorshDeserialize, BorshSerialize};
-use serde::{Deserialize, Serialize};
+use crate::borsh::{BorshDeserialize, BorshSerialize};
+use crate::serde::{Deserialize, Serialize};
 use std::convert::{TryFrom, TryInto};
 
 /// PublicKey curve
@@ -58,26 +58,29 @@ impl TryFrom<Vec<u8>> for Base58PublicKey {
     }
 }
 
-impl serde::Serialize for Base58PublicKey {
+impl crate::serde::Serialize for Base58PublicKey {
     fn serialize<S>(
         &self,
         serializer: S,
-    ) -> Result<<S as serde::Serializer>::Ok, <S as serde::Serializer>::Error>
+    ) -> Result<<S as crate::serde::Serializer>::Ok, <S as crate::serde::Serializer>::Error>
     where
-        S: serde::Serializer,
+        S: crate::serde::Serializer,
     {
         serializer.serialize_str(&String::from(self))
     }
 }
 
-impl<'de> serde::Deserialize<'de> for Base58PublicKey {
-    fn deserialize<D>(deserializer: D) -> Result<Self, <D as serde::Deserializer<'de>>::Error>
+impl<'de> crate::serde::Deserialize<'de> for Base58PublicKey {
+    fn deserialize<D>(
+        deserializer: D,
+    ) -> Result<Self, <D as crate::serde::Deserializer<'de>>::Error>
     where
-        D: serde::Deserializer<'de>,
+        D: crate::serde::Deserializer<'de>,
     {
-        let s = <String as serde::Deserialize>::deserialize(deserializer)?;
-        s.try_into()
-            .map_err(|err: Box<dyn std::error::Error>| serde::de::Error::custom(err.to_string()))
+        let s = <String as crate::serde::Deserialize>::deserialize(deserializer)?;
+        s.try_into().map_err(|err: Box<dyn std::error::Error>| {
+            crate::serde::de::Error::custom(err.to_string())
+        })
     }
 }
 

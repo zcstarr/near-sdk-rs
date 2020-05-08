@@ -1,6 +1,6 @@
-use borsh::{BorshDeserialize, BorshSerialize};
-use serde::de::Error;
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use crate::borsh::{BorshDeserialize, BorshSerialize};
+use crate::serde::de::Error;
+use crate::serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 /// Helper class to serialize/deserialize `Vec<u8>` to base64 string.
 #[derive(Debug, Clone, PartialEq, BorshDeserialize, BorshSerialize)]
@@ -48,8 +48,8 @@ mod tests {
             let b: Vec<u8> = wrapped_a.clone().into();
             assert_eq!(a, b);
 
-            let str: String = serde_json::to_string(&wrapped_a).unwrap();
-            let deser_a: Base64VecU8 = serde_json::from_str(&str).unwrap();
+            let str: String = crate::serde_json::to_string(&wrapped_a).unwrap();
+            let deser_a: Base64VecU8 = crate::serde_json::from_str(&str).unwrap();
             assert_eq!(a, deser_a.0);
         };
     }

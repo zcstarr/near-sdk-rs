@@ -19,8 +19,8 @@ impl ImplItemMethodInfo {
     ///     is_view: false,
     ///     is_init: false,
     ///     args: {
-    ///         #[derive(borsh::BorshSchema)]
-    ///         #[derive(serde :: Deserialize, serde :: Serialize)]
+    ///         #[derive(near_sdk::borsh::BorshSchema)]
+    ///         #[derive(near_sdk :: serde :: Deserialize, near_sdk :: serde :: Serialize)]
     ///         struct Input {
     ///             arg0: FancyStruct,
     ///             arg1: u64,
@@ -32,7 +32,7 @@ impl ImplItemMethodInfo {
     ///     result: Some(Result < IsOk, Error > ::schema_container())
     /// }
     /// ```
-    /// If args are serialized with Borsh it will not include `#[derive(borsh::BorshSchema)]`.
+    /// If args are serialized with Borsh it will not include `#[derive(near_sdk::borsh::BorshSchema)]`.
     pub fn metadata_struct(&self) -> TokenStream2 {
         let method_name_str = self.attr_signature_info.ident.to_string();
         let is_view = match &self.attr_signature_info.receiver {
@@ -46,7 +46,7 @@ impl ImplItemMethodInfo {
             let additional_schema = match &self.attr_signature_info.input_serializer {
                 SerializerType::Borsh => TokenStream2::new(),
                 SerializerType::JSON => quote! {
-                    #[derive(borsh::BorshSchema)]
+                    #[derive(near_sdk::borsh::BorshSchema)]
                 },
             };
             quote! {

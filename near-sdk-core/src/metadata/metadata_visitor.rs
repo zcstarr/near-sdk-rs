@@ -60,11 +60,11 @@ impl MetadataVisitor {
             pub extern "C" fn metadata() {
                 #panic_hook
                 #env_creation
-                use borsh::*;
+                use near_sdk::borsh::*;
                 let metadata = near_sdk::Metadata::new(vec![
                     #(#methods),*
                 ]);
-                let data = borsh::BorshSerialize::try_to_vec(&metadata).expect("Failed to serialize the metadata using Borsh");
+                let data = near_sdk::borsh::BorshSerialize::try_to_vec(&metadata).expect("Failed to serialize the metadata using Borsh");
                 near_sdk::env::value_return(&data);
             }
         })
@@ -104,7 +104,7 @@ mod tests {
             pub extern "C" fn metadata() {
                 near_sdk::env::setup_panic_hook();
                 near_sdk::env::set_blockchain_interface(Box::new(near_blockchain::NearBlockchain {}));
-                use borsh::*;
+                use near_sdk::borsh::*;
                 let metadata = near_sdk::Metadata::new(vec![
                     near_sdk::MethodMetadata {
                         name: "f1".to_string(),
@@ -120,8 +120,8 @@ mod tests {
                         is_view: false,
                         is_init: false,
                         args: {
-                            #[derive(borsh::BorshSchema)]
-                            #[derive(serde :: Deserialize, serde :: Serialize)]
+                            #[derive(near_sdk::borsh::BorshSchema)]
+                            #[derive(near_sdk :: serde :: Deserialize, near_sdk :: serde :: Serialize)]
                             struct Input {
                                 arg0: FancyStruct,
                                 arg1: u64,
@@ -137,8 +137,8 @@ mod tests {
                         is_view: false,
                         is_init: false,
                         args: {
-                            #[derive(borsh::BorshSchema)]
-                            #[derive(serde :: Deserialize, serde :: Serialize)]
+                            #[derive(near_sdk::borsh::BorshSchema)]
+                            #[derive(near_sdk :: serde :: Deserialize, near_sdk :: serde :: Serialize)]
                             struct Input {
                                 arg0: FancyStruct,
                                 arg1: u64,
@@ -150,7 +150,7 @@ mod tests {
                         result: Some(Result < IsOk, Error > ::schema_container())
                     }
                 ]);
-                let data = borsh::BorshSerialize::try_to_vec(&metadata)
+                let data = near_sdk::borsh::BorshSerialize::try_to_vec(&metadata)
                     .expect("Failed to serialize the metadata using Borsh");
                 near_sdk::env::value_return(&data);
             }

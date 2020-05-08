@@ -1,8 +1,8 @@
 //! A vector implemented on a trie. Unlike standard vector does not support insertion and removal
 //! of an element results in the last element being placed in the empty position.
+use crate::borsh::{BorshDeserialize, BorshSerialize};
 use crate::collections::next_trie_id;
 use crate::env;
-use borsh::{BorshDeserialize, BorshSerialize};
 use std::marker::PhantomData;
 use std::mem::size_of;
 

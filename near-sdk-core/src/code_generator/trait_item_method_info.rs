@@ -22,10 +22,11 @@ impl TraitItemMethodInfo {
             constructor = quote! {let args = #constructor_call;};
             value_ser = match self.attr_sig_info.result_serializer {
                 SerializerType::JSON => quote! {
-                    let args = serde_json::to_vec(&args).expect("Failed to serialize the cross contract args using JSON.");
+                    use near_sdk::serde;
+                    let args = near_sdk::serde_json::to_vec(&args).expect("Failed to serialize the cross contract args using JSON.");
                 },
                 SerializerType::Borsh => quote! {
-                    let args = borsh::BorshSerialize::try_to_vec(&args).expect("Failed to serialize the cross contract args using Borsh.");
+                    let args = near_sdk::borsh::BorshSerialize::try_to_vec(&args).expect("Failed to serialize the cross contract args using Borsh.");
                 },
             };
         }

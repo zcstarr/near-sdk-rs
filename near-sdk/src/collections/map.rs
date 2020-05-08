@@ -1,8 +1,8 @@
 //! A map implemented on a trie. Unlike `std::collections::HashMap` the keys in this map are not
 //! hashed but are instead serialized.
+use crate::borsh::{BorshDeserialize, BorshSerialize};
 use crate::collections::{next_trie_id, Vector};
 use crate::env;
-use borsh::{BorshDeserialize, BorshSerialize};
 use std::mem::size_of;
 
 const ERR_INCONSISTENT_STATE: &[u8] = b"The collection is an inconsistent state. Did previous smart contract execution terminate unexpectedly?";

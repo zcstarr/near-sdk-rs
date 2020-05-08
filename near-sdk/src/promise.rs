@@ -1,4 +1,4 @@
-use borsh::BorshSchema;
+use crate::borsh::BorshSchema;
 use near_vm_logic::types::{AccountId, Balance, Gas, PromiseIndex, PublicKey};
 use std::cell::RefCell;
 use std::collections::HashMap;
@@ -387,10 +387,10 @@ impl Drop for Promise {
     }
 }
 
-impl serde::Serialize for Promise {
+impl crate::serde::Serialize for Promise {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
-        S: serde::Serializer,
+        S: crate::serde::Serializer,
     {
         *self.should_return.borrow_mut() = true;
         serializer.serialize_unit()
@@ -423,10 +423,10 @@ impl<T> From<Promise> for PromiseOrValue<T> {
     }
 }
 
-impl<T: serde::Serialize> serde::Serialize for PromiseOrValue<T> {
+impl<T: crate::serde::Serialize> crate::serde::Serialize for PromiseOrValue<T> {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
-        S: serde::Serializer,
+        S: crate::serde::Serializer,
     {
         match self {
             // Only actual value is serialized.
@@ -437,7 +437,7 @@ impl<T: serde::Serialize> serde::Serialize for PromiseOrValue<T> {
     }
 }
 
-impl<T: borsh::BorshSerialize> borsh::BorshSerialize for PromiseOrValue<T> {
+impl<T: crate::borsh::BorshSerialize> crate::borsh::BorshSerialize for PromiseOrValue<T> {
     fn serialize<W: Write>(&self, writer: &mut W) -> Result<(), Error> {
         match self {
             // Only actual value is serialized.
