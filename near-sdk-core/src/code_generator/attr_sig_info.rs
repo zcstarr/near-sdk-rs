@@ -26,7 +26,10 @@ impl AttrSigInfo {
         );
         let attribute = match &self.input_serializer {
             SerializerType::JSON => {
-                quote! {#[derive(near_sdk::serde::Deserialize, near_sdk::serde::Serialize)]}
+                quote! {
+                    #[derive(near_sdk::serde::Deserialize, near_sdk::serde::Serialize)]
+                    #[serde(crate = "near_sdk::serde")]
+                }
             }
             SerializerType::Borsh => {
                 quote! {#[derive(near_sdk::borsh::BorshDeserialize, near_sdk::borsh::BorshSerialize)]}
