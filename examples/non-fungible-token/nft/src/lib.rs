@@ -26,7 +26,6 @@ use near_sdk::json_types::ValidAccountId;
 use near_sdk::{
     env, near_bindgen, AccountId, BorshStorageKey, PanicOnDefault, Promise, PromiseOrValue,
 };
-use std::collections::HashMap;
 
 near_sdk::setup_alloc!();
 
