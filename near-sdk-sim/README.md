@@ -162,7 +162,8 @@ fn simulate_some_view_function() {
 
 #[test]
 fn simulate_some_change_method() {
-    let (root, contract, _alice) = init();
+    let (
+    contract, _alice) = init();
 
     let result = root.call(
         contract.account_id(),
@@ -224,7 +225,7 @@ pub fn init() -> (UserAccount, ContractAccount<TokenContract>, UserAccount) {
         contract: TokenContract,
         contract_id: CONTRACT_ID,
         bytes: &CONTRACT_WASM_BYTES,
-        signer_account: root,
+        signer_account: root
     );
 
     let alice = root.create_user(
